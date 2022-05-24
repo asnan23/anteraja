@@ -1,0 +1,90 @@
+﻿@page "/"
+@page "/index"
+
+@using AnterAjaTest.Shared
+@using Newtonsoft.Json
+
+@inject HttpClient _httpClient
+
+<h2>Master Price</h2>
+<div>
+    <a href="/addprice"> Create New</a>
+    <br />
+    <br />
+    <button class="btn-sm btn-primary" @onclick="loadData">Load Data</button>
+
+    @if (masterPirceList is null && loadLocation == "")
+    {
+        <p><em>Click the button to load data</em></p>
+    }
+    else if (masterPirceList is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="h5 @isCacheData">@loadLocation</div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th width="25%">Origin</th>
+                    <th width="25%">Destination</th>
+                    <th width="20%">Price</th>
+                    <th width="20%">Product</th>
+                    <th width="10%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in masterPirceList)
+                {
+                    <tr>
+                        <td>
+                            @p.origin_code
+                        </td>
+                        <td>@p.destination_code</td>
+                        <td>@p.price</td>
+                        <td>@p.product</td>
+                        <td>
+                            <a href="/editprice/@p.Id">Edit</a> |
+                            <a href="/deleteprice/@p.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+@code {
+
+    List<MasterPriceVM> masterPirceList = new List<MasterPriceVM>();
+    private string loadLocation = "";
+    private string isCacheData = "";
+    protected override async Task OnInitializedAsync()
+    {
+        await loadData();
+    }
+
+    public async Task loadData()
+    {
+        masterPirceList = null;
+        loadLocation = null;
+        var response = await _httpClient.GetAsync("MasterPrice");
+        response.EnsureSuccessStatusCode();
+        var responDto = await response.Content.ReadFromJsonAsync<ResponseDto>();
+        masterPirceList = JsonConvert.DeserializeObject<List<MasterPriceVM>>(Convert.ToString(responDto.Result));
+        if (masterPirceList.Count > 0)
+        {
+            loadLocation = responDto.DisplayMessage + " at " + DateTime.Now.ToString();
+            if (responDto.DisplayMessage.Contains("Redis"))
+            {
+                isCacheData = "text-danger";
+            }
+        }
+        else
+        {
+            loadLocation = "";
+            isCacheData = "";
+        }
+    }
+}
+

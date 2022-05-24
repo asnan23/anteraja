@@ -1,0 +1,73 @@
+﻿@page "/addprice"
+@using AnterAjaTest.Shared
+@using Newtonsoft.Json
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<h2>Add Master Price</h2>
+<EditForm Model="masterPrice" OnValidSubmit="Save" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+    <div class="form-group row">
+        <label for="name" class="col-md-2 col-form-label">Origin:</label>
+        <div class="col-md-10">
+            <InputText id="origin_code" class="form-control" @bind-Value="masterPrice.origin_code" />
+            <ValidationMessage For="@(() => masterPrice.origin_code)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="supplier" class="col-md-2 col-form-label">Destination:</label>
+        <div class="col-md-10">
+            <InputText id="destination_code" class="form-control" @bind-Value="masterPrice.destination_code" />
+            <ValidationMessage For="@(() => masterPrice.destination_code)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="price" class="col-md-2 col-form-label">Price:</label>
+        <div class="col-md-10">
+            <InputNumber id="price" class="form-control" @bind-Value="masterPrice.price" />
+            <ValidationMessage For="@(() => masterPrice.price)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="image" class="col-md-2 col-form-label">Product:</label>
+        <div class="col-md-10">
+            <InputText id="product" class="form-control" @bind-Value="masterPrice.product" />
+            <ValidationMessage For="@(() => masterPrice.price)" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    MasterPriceVM masterPrice = new MasterPriceVM();
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+    protected async Task Save()
+    {
+        var response = await Http.PostAsJsonAsync<MasterPriceVM>("MasterPrice", masterPrice);
+        var responDto = await response.Content.ReadFromJsonAsync<ResponseDto>();
+        var result = JsonConvert.DeserializeObject<MasterPriceVM>(Convert.ToString(responDto.Result));
+        if (result?.Id > 0)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", responDto.DisplayMessage);
+            NavigationManager.NavigateTo("index");
+        }
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("index");
+    }
+
+}
