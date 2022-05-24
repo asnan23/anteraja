@@ -41,6 +41,16 @@ namespace AnterAjaTest.API.Services
                 return false;
         }
 
+        public async Task<bool> MasterPriceExist(MasterPrice masterPrice)
+        {
+            var data = await _masterPrice.ExistAsync(masterPrice.origin_code,masterPrice.destination_code);
+
+            if (data != null)
+                return true;
+            else
+                return false;
+        }
+
         public async Task<bool> DeleteMasterPrice(int id)
         {
             await _masterPrice.DeleteAsync(id);

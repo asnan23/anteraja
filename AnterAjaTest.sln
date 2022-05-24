@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnterAjaTest.API", "AnterAj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnterAjaTest.Shared", "AnterAjaTest.Shared\AnterAjaTest.Shared.csproj", "{B50D0695-8B46-4EB1-A412-9CBBFDA9B5D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnterAjaTest.Console", "AnterAjaTest.Console\AnterAjaTest.Console.csproj", "{EC12C8D5-45E0-4144-8EF5-477767580F41}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{B50D0695-8B46-4EB1-A412-9CBBFDA9B5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B50D0695-8B46-4EB1-A412-9CBBFDA9B5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B50D0695-8B46-4EB1-A412-9CBBFDA9B5D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC12C8D5-45E0-4144-8EF5-477767580F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC12C8D5-45E0-4144-8EF5-477767580F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC12C8D5-45E0-4144-8EF5-477767580F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC12C8D5-45E0-4144-8EF5-477767580F41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,6 +12,7 @@ namespace AnterAjaTest.API.Services
         Task<MasterPrice> AddMasterPrice(MasterPrice masterPrice);
 
         Task<bool> UpdateMasterPrice(int id, MasterPrice masterPrice);
+        Task<bool> MasterPriceExist(MasterPrice masterPrice);
 
         Task<bool> DeleteMasterPrice(int id);
 

@@ -52,7 +52,7 @@ namespace AnterAjaTest.API
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetConnectionString("Redis");
-                options.InstanceName = "PRICE_";
+                options.InstanceName = "PRICE:";
             });
 
             services.AddSwaggerGen(c =>

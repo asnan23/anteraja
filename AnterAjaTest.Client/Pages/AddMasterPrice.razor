@@ -58,12 +58,9 @@
     {
         var response = await Http.PostAsJsonAsync<MasterPriceVM>("MasterPrice", masterPrice);
         var responDto = await response.Content.ReadFromJsonAsync<ResponseDto>();
-        var result = JsonConvert.DeserializeObject<MasterPriceVM>(Convert.ToString(responDto.Result));
-        if (result?.Id > 0)
-        {
-            await JsRuntime.InvokeVoidAsync("alert", responDto.DisplayMessage);
+        await JsRuntime.InvokeVoidAsync("alert", responDto.DisplayMessage);
+        if (responDto.IsSuccess)
             NavigationManager.NavigateTo("index");
-        }
     }
     void Cancel()
     {

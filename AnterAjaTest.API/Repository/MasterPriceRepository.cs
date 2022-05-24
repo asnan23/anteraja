@@ -28,6 +28,11 @@ namespace AnterAjaTest.API.Repository
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<MasterPrice> ExistAsync(string origin, string dest)
+        {
+            return await _dbContext.MasterPrices.FirstOrDefaultAsync(t => t.origin_code == origin && t.destination_code == dest);            
+        }
+
         public async Task<List<MasterPrice>> GetAllAsync()
         {
             return await _dbContext.MasterPrices.ToListAsync();
