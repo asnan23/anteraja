@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,7 +52,7 @@ namespace AnterAjaTest.API
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetConnectionString("Redis");
-                options.InstanceName = "RedisDemo_";
+                options.InstanceName = "PRICE_";
             });
 
             services.AddSwaggerGen(c =>
@@ -63,7 +64,7 @@ namespace AnterAjaTest.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -71,6 +72,8 @@ namespace AnterAjaTest.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnterAjaTest.API v1"));
             }
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnterAjaTest.API v1"));
 
             app.UseCors("EnableCORS");
 

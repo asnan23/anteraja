@@ -76,9 +76,10 @@
         {
             loadLocation = responDto.DisplayMessage + " at " + DateTime.Now.ToString();
             if (responDto.DisplayMessage.Contains("Redis"))
-            {
                 isCacheData = "text-danger";
-            }
+            else
+                isCacheData = "";
+
         }
         else
         {

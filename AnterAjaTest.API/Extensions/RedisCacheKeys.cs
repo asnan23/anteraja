@@ -7,6 +7,6 @@ namespace AnterAjaTest.API.Extensions
 {
     public static class RedisCacheKeys
     {
-        public const string MasterPrice = "MasterPrice";
+        public const string MasterPrice = "ALL";
     }
 }
