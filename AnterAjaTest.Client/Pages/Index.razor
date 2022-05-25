@@ -52,44 +52,12 @@
                 }
             </tbody>
         </table>
-
-        <div class="row">
-            <EditForm Model="checkParam" OnValidSubmit="Check" class="card card-body bg-light mt-5">
-                <div class="form-group row">
-                    <div class="col-md-3">
-                        <InputText class="form-control" placeholder="Origin" @bind-Value="checkParam.origin_code" DisplayName="Origin" />
-                        <ValidationMessage For="@(() => checkParam.origin_code)" />
-                    </div>
-                    <div class="col-md-3">
-                        <InputText class="form-control" placeholder="Destination" @bind-Value="checkParam.destination_code" DisplayName="Destination" />
-                        <ValidationMessage For="@(() => checkParam.destination_code)" />
-                    </div>
-                    <div class="col-md-3">
-                        <InputText class="form-control" placeholder="Product" @bind-Value="checkParam.product" DisplayName="Product" />
-                        <ValidationMessage For="@(() => checkParam.product)" />
-                    </div>
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-warning">Price Check</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        @if (price != "")
-                        {
-                        <strong>@price</strong> 
-                        }
-                    </div>
-                </div>
-            </EditForm>
-        </div>
     }
 </div>
 @code {
-        MasterPriceVM checkParam = new MasterPriceVM();
-        List<MasterPriceVM> masterPirceList = new List<MasterPriceVM>();
+    List<MasterPriceVM> masterPirceList = new List<MasterPriceVM>();
     private string loadLocation = "";
     private string isCacheData = "";
-    private string price = "";
     protected override async Task OnInitializedAsync()
     {
         await loadData();
@@ -117,27 +85,6 @@
             loadLocation = "";
             isCacheData = "";
         }
-    }
-
-    public async Task Check()
-    {
-        price = "";
-        var key = $"{checkParam.origin_code},{checkParam.destination_code},{checkParam.product}";
-        var res = await _httpClient.GetFromJsonAsync<ResponseDto>("MasterPrice/Redis?key=" + key);
-        if (res.IsSuccess)
-        {
-            if (res.DisplayMessage.Contains("No Data"))
-            {
-                price = res.DisplayMessage;
-            }
-            else
-            {
-                var result = JsonConvert.DeserializeObject<MasterPriceVM>(Convert.ToString(res.Result));
-                if (result is not null)
-                    price = result.price.ToString();
-            }
-        }
-
     }
 }
 
